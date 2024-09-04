@@ -1,0 +1,17 @@
+[package]
+name = "mailboxrelay"
+version = "0.1.0"
+edition = "2021"
+authors = ["Alwin Berger <alwin.berger@udo.edu>"]
+categories = ["email"]
+license = "0BSD"
+
+[dependencies]
+serde = "1.0.209"
+toml = "0.8.19"
+clap = { version = "4.5.16", features = ["derive"] }
+imap = "2.4.1"
+mail-parser = "0.9.4"
+mail-send = "0.4.9"
+native-tls = "0.2.12"
+tokio = { version = "1", features = ["full"] }
