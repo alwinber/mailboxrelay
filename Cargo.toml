@@ -13,6 +13,17 @@ clap = { version = "4.5.16", features = ["derive"] }
 imap = { version = "2.4.1", default-features = false }
 mail-parser = "0.9.4"
 mail-send = "0.4.9"
-rustls = { version = "0.23", default-features = false, features = ["std", "ring"] }
-rustls-connector = { version = "0.21.4", default-features = false, features = ["native-certs", "rustls--ring"] }
+rustls = { version = "0.23", default-features = false, features = [
+    "std",
+    "ring",
+] }
+rustls-connector = { version = "0.21.4", default-features = false, features = [
+    "native-certs",
+    "rustls--ring",
+] }
 tokio = { version = "1.40.0", features = ["net", "io-util", "time", "macros"] }
+
+[patch.crates-io]
+# zip version 2.2.0 without bzip2 by default
+# bzip2 limits portability and cross-compilation
+zip = { git = "https://github.com/alwinber/zip2.git" }
