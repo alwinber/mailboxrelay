@@ -1,13 +1,13 @@
-# Mailrelay
+# Mailboxrelay
 A simple mail retrieval agent that retrieves and forwards your mail to a different address.  
 This is usefull when you want to migrate away from a mail provider that charges for automatic forwarding.
 
 ## Usage
 ```
-$ mailrelay -h                  
+$ mailboxrelay -h                                                                                                          2 ↵
 A mail retrieval agent that retrieves email using IMAP and forwards it to a different address using SMTP
 
-Usage: mailrelay [OPTIONS] --config <CONFIG>
+Usage: mailboxrelay [OPTIONS] --config <CONFIG>
 
 Options:
   -c, --config <CONFIG>      Path to the config file with login information
