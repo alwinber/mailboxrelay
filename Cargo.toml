@@ -10,8 +10,9 @@ license = "0BSD"
 serde = "1.0.209"
 toml = "0.8.19"
 clap = { version = "4.5.16", features = ["derive"] }
-imap = "2.4.1"
+imap = { version = "2.4.1", default-features = false }
 mail-parser = "0.9.4"
 mail-send = "0.4.9"
-native-tls = "0.2.12"
-tokio = { version = "1", features = ["full"] }
+rustls = { version = "0.23", default-features = false, features = ["std", "ring"] }
+rustls-connector = { version = "0.21.4", default-features = false, features = ["native-certs", "rustls--ring"] }
+tokio = { version = "1.40.0", features = ["net", "io-util", "time", "macros"] }

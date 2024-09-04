@@ -1,8 +1,12 @@
 use clap::Parser;
 use imap::types::Fetch;
 use imap::types::ZeroCopy;
+use imap::Session;
 use mail_parser::*;
 use mail_send::SmtpClientBuilder;
+use rustls::ClientConnection;
+use rustls::StreamOwned;
+use rustls_connector::RustlsConnector;
 use serde::Deserialize;
 use serde::Serialize;
 use std::collections::HashMap;
@@ -39,14 +43,14 @@ fn open_session(
     config: &Config,
 ) -> Result<
     (
-        imap::Session<native_tls::TlsStream<TcpStream>>,
-        native_tls::TlsConnector,
+        Session<StreamOwned<ClientConnection, TcpStream>>,
+        RustlsConnector,
     ),
     Box<dyn Error>,
 > {
     // Setup Rustls TcpStream
     let stream = TcpStream::connect((config.imap_domain.as_ref(), 993))?;
-    let tls = native_tls::TlsConnector::builder().build().unwrap();
+    let tls = RustlsConnector::default();
     let tlsstream = tls.connect(&config.imap_domain, stream)?;
 
     // we pass in the domain twice to check that the server's TLS
@@ -63,7 +67,7 @@ fn open_session(
 }
 
 fn fetch_unread_mail(
-    session: &mut imap::Session<native_tls::TlsStream<TcpStream>>,
+    session: &mut Session<StreamOwned<ClientConnection, TcpStream>>,
 ) -> Result<ZeroCopy<Vec<Fetch>>, Box<dyn Error>> {
     let unseen = session.uid_search("NOT SEEN")?;
     let unseen_str = unseen
@@ -95,7 +99,7 @@ fn build_forward_message<'a>(
 }
 
 fn mark_as_seen(
-    session: &mut imap::Session<native_tls::TlsStream<TcpStream>>,
+    session: &mut Session<StreamOwned<ClientConnection, TcpStream>>,
     fetch: &Fetch,
 ) -> Result<ZeroCopy<Vec<Fetch>>, Box<dyn Error>> {
     Ok(session.uid_store(
