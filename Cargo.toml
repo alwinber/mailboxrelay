@@ -18,7 +18,7 @@ rustls = { version = "0.23", default-features = false, features = [
     "ring",
 ] }
 rustls-connector = { version = "0.21.4", default-features = false, features = [
-    "native-certs",
+    "webpki-roots-certs",
     "rustls--ring",
 ] }
 tokio = { version = "1.40.0", features = ["net", "io-util", "time", "macros"] }

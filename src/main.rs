@@ -50,7 +50,7 @@ fn open_session(
 > {
     // Setup Rustls TcpStream
     let stream = TcpStream::connect((config.imap_domain.as_ref(), 993))?;
-    let tls = RustlsConnector::default();
+    let tls = RustlsConnector::new_with_webpki_roots_certs();
     let tlsstream = tls.connect(&config.imap_domain, stream)?;
 
     // we pass in the domain twice to check that the server's TLS
